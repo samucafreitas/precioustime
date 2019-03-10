@@ -9,3 +9,11 @@ block content
     h3 What is your main focus today?
 
     input(id='main_subject' type='text')
+
+    div(id='todo')
+        div(id='todo-top')
+            span(id='today-span') Today
+        div(id='todo-list')
+            ol(id='todo-ol')
+        div(id='todo-footer')
+            input(id='todo-footer-input' type='text' placeholder="New Todo" oninput='inpFunction()')

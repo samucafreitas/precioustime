@@ -21,8 +21,65 @@ h3 {
     border-right: none;
     border-top: none;
     background: none;
-    padding: 8px;
+    padding: 0.6rem;
     outline: none;
     color: #fff;
     font-size: 2rem;
+}
+
+#todo {
+    border-radius: 5px;
+    margin-bottom: 0.6rem;
+    bottom: 0;
+    right: 0.6rem;
+    position: absolute;
+    width: 320px;
+    background-color: rgba(0,0,0,0.5);
+    height: auto;
+    text-align: left;
+}
+
+#todo-top {
+    padding: 0.5rem;
+}
+
+#today-span {
+    font-weight: 500;
+    position: relative;
+    color: #fff;
+}
+
+#todo-list {
+    position: relative;
+    width: 100%;
+    display: block;
+    min-height: 30px;
+    max-height: 300px;
+    overflow: auto;
+}
+
+#todo-footer{
+    display: flex;
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    position: static;
+}
+
+#todo-footer-input {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+#todo-ol {
+    color: #fff;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding: 0.5rem;
 }

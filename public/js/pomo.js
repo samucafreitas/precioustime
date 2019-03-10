@@ -10,3 +10,11 @@ pomo = () => {
         document.title = '(' + formatted_time + ')' + ' Precious Time';
         tomato--;}, 1000);
 }
+
+inpFunction = () => {
+    var li = document.createElement("li");
+    var inputValue = document.getElementById("todo-footer-input").value;
+    var t = document.createTextNode(inputValue);
+    li.appendChild(t);
+    document.getElementById("todo-ol").appendChild(li);
+}

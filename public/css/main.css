@@ -4,24 +4,36 @@ body {
     text-align:center;
 }
 
-h1 {
-    font-size: 8rem;
+h3 {
+    font-size: 2.1875rem;
+    font-weight: 300;
     color: white;
 }
 
-h3 {
+
+#pomo {
+    font-size: 1050%;
+    letter-spacing: -5px;
+    color: #fff;
+}
+
+#message {
+    display: block;
     font-size: 3rem;
     color: #fff;
 }
 
-#main_subject {
+#main-focus {
+    margin-top: 55px;
+}
+
+#main-subject {
     border-radius: 5px;
     border: 2px solid #fff;
     border-left: none;
     border-right: none;
     border-top: none;
     background: none;
-    padding: 0.6rem;
     outline: none;
     color: #fff;
     font-size: 2rem;
@@ -82,4 +94,8 @@ h3 {
     margin: 0;
     padding: 0;
     padding: 0.5rem;
+}
+
+#todo ol li {
+    display: block;
 }

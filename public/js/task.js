@@ -20,16 +20,16 @@ updateTodo = () => {
     tasks.map(task => {
         if (task.isChecked === true) {
             list += '<li id-data='+ task.id + '>' 
-                    + '<input type="checkbox" onclick="checkedTask(' + task.id + ')" checked><strike>' 
-                    + '<span>' + task.data.description + '</span>'
+                    + '<button id="x-btn" onclick="deleteTask(' + task.id + ')">X</button>' 
+                    + '<input id="check-input" type="checkbox" onclick="checkedTask(' + task.id + ')" checked><strike>' 
+                    + '<span id="desc-span" onclick="checkedTask(' + task.id + ')">' + task.data.description + '</span>'
                     + '</strike>' 
-                    + '<button>X</button>' 
                 + '</li>';
         } else {
             list += '<li id-data='+ task.id + '>' 
-                    + '<input type="checkbox" onclick="checkedTask(' + task.id + ')">' 
-                    + '<span>' + task.data.description + '</span>'
-                    + '<button>X</button>' 
+                    + '<button id="x-btn" onclick="deleteTask(' + task.id + ')">X</button>' 
+                    + '<input id="check-input" type="checkbox" onclick="checkedTask(' + task.id + ')">' 
+                    + '<span id="desc-span" onclick="checkedTask(' + task.id + ')">' + task.data.description + '</span>'
                 + '</li>';
         }
     });
@@ -62,6 +62,12 @@ checkedTask = (id) => {
         }
         return task;
     });
+
+    updateTodo();
+}
+
+deleteTask = (id) => {
+    tasks = tasks.filter((task) => {if (parseInt(task.id) !== id) return task});
 
     updateTodo();
 }

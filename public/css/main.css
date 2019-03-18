@@ -10,6 +10,15 @@ h3 {
     color: white;
 }
 
+#center {
+    display: block;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translate(-50%,-50%);
+    position: absolute;
+}
 
 #pomo {
     font-size: 1050%;
@@ -37,6 +46,8 @@ h3 {
     outline: none;
     color: #fff;
     font-size: 2rem;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #todo {
@@ -94,8 +105,39 @@ h3 {
     margin: 0;
     padding: 0;
     padding: 0.5rem;
+    cursor: default;
 }
 
 #todo ol li {
     display: block;
+}
+
+#x-btn {
+    user-select: none;
+    margin-top: 2px;
+    display: block;
+    position: relative;
+    top: 0;
+    float: right;
+    background: none;
+    color: #fff;
+    font-weight: 800;
+    border: none;
+    outline: none;
+}
+
+#x-btn:hover {
+   color: blueviolet;
+}
+
+#desc-span {
+    user-select: none;
+    margin: 0 20px;
+    display: block;
+    cursor: default;
+    word-wrap: break-word;
+}
+
+#check-input {
+    float: left;
 }

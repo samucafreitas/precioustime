@@ -114,8 +114,8 @@ h3 {
 
 #x-btn {
     user-select: none;
-    margin-top: 2px;
     display: block;
+    margin: 0;
     position: relative;
     top: 0;
     float: right;
@@ -140,4 +140,5 @@ h3 {
 
 #check-input {
     float: left;
+    margin: 0;
 }

@@ -1,5 +1,6 @@
 const BaseRoute = require('./base/baseRoute');
 
+
 class TodoRoute extends BaseRoute {
     constructor(db) {
         super();
@@ -11,7 +12,7 @@ class TodoRoute extends BaseRoute {
             method: 'GET',
             path: '/todos',
             handler: (req, headers) => {
-                return "TODO: LIST todos";
+                return db.list("QUERY"); //"TODO: LIST todos";
             }
         }
     }
@@ -21,7 +22,7 @@ class TodoRoute extends BaseRoute {
             method: 'POST',
             path: '/todos',
             handler: (req, headers) => {
-                return "TODO: CREATE todos";
+                return db.create("Foo"); //"TODO: CREATE todos";
             }
         }
     }
@@ -31,7 +32,7 @@ class TodoRoute extends BaseRoute {
             method: 'delete',
             path: '/todos',
             handler: (req, headers) => {
-                return "TODO: DELETE todos";
+                return db.delete("ID"); //TODO: DELETE todos";
             }
         }
     }

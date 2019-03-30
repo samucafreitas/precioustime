@@ -4,6 +4,9 @@ const Hapi = require('hapi');
 const Pug = require('pug');
 const TodoRoute = require('./routes/todoRoute');
 
+const ContextStrategy = require('./db/strategies/base/contextStrategy');
+const FireDB = require('./db/strategies/firebase/fireDB');
+
 const server = Hapi.server({
     port: 3000,
     host: 'localhost'
@@ -24,8 +27,11 @@ const init = async () => {
         await server.register(require('vision'));
         await server.register(require('inert'));
 
+        const connection = FireDB.connect();
+        const ContextFireDB = new ContextStrategy(new FireDB(connection));
+
         server.route([
-            ...mapRoute(new TodoRoute(), TodoRoute.methods())
+            ...mapRoute(new TodoRoute(ContextFireDB), TodoRoute.methods())
         ]);
 
         server.route({

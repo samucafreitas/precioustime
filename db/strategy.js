@@ -22,15 +22,6 @@ class ICrud {
     }
 }
 
-class FireDB extends ICrud {
-    constructor() {
-        super();
-    }
-
-    create(item) {
-        return item + " criado!";
-    }
-}
 
 class ContextStrategy extends ICrud {
     constructor(strategy) {

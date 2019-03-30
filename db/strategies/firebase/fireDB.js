@@ -7,7 +7,7 @@ class FireDB extends ICrud {
         this._connection = connection;
     }
 
-    connect() {
+    static connect() {
         const config = {
             apiKey: "AIzaSyBlXpKwtYx6g915UGHZnhcwaw_lmANRaww",
             authDomain: "precioustime.firebaseapp.com",
@@ -20,10 +20,15 @@ class FireDB extends ICrud {
         firebase.initializeApp(config);
         return firebase;
     }
+    
+    read(query) {
+        var todos = this._connection.database().ref('todos').once('value').then((snap) => snap.val());
+        return todos;
+    }
 
     create(item) {
         return item + " criado!";
     }
 }
 
-exports.module = FireDB;
+module.exports = FireDB;

@@ -5,10 +5,6 @@ class NotImplementedException extends Error {
 }
 
 class ICrud {
-    constructor() {
-        
-    }
-
     read(query) {
         throw new NotImplementedException();
     }
@@ -26,4 +22,4 @@ class ICrud {
     }
 }
 
-exports.module = ICrud;
+module.exports = ICrud;

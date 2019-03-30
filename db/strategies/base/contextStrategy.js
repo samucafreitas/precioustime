@@ -1,8 +1,9 @@
-const ICrud = require("../interfaces/InterfaceCrud");
+
+const ICrud = require('../interfaces/InterfaceCrud');
 
 class ContextStrategy extends ICrud {
     constructor(strategy) {
-        super();
+        super()
         return this._database = strategy;
     }
 
@@ -23,4 +24,4 @@ class ContextStrategy extends ICrud {
     }
 }
 
-exports.module = ContextStrategy;
+module.exports = ContextStrategy;

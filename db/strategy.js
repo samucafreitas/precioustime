@@ -22,10 +22,10 @@ class ICrud {
     }
 }
 
+class FireDB extends ICrud {}
 
-class ContextStrategy extends ICrud {
+class ContextStrategy {
     constructor(strategy) {
-        super();
         return this._database = strategy;
     }
 

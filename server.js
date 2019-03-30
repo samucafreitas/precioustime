@@ -2,11 +2,16 @@
 
 const Hapi = require('hapi');
 const Pug = require('pug');
+const TodoRoute = require('./routes/todoRoute');
 
 const server = Hapi.server({
     port: 3000,
     host: 'localhost'
 });
+
+const mapRoute = (instance, methods) => { 
+    return methods.map(method => instance[method]());
+}
 
 server.route({
     method: 'GET',
@@ -18,6 +23,10 @@ const init = async () => {
     try {
         await server.register(require('vision'));
         await server.register(require('inert'));
+
+        server.route([
+            ...mapRoute(new TodoRoute(), TodoRoute.methods())
+        ]);
 
         server.route({
             method: 'GET',

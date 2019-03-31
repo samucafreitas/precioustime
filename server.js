@@ -2,6 +2,8 @@
 
 const Hapi = require('hapi');
 const Pug = require('pug');
+
+const MainRoute = require('./routes/mainRoute');
 const TodoRoute = require('./routes/todoRoute');
 
 const ContextStrategy = require('./db/strategies/base/contextStrategy');
@@ -16,12 +18,6 @@ const mapRoute = (instance, methods) => {
     return methods.map(method => instance[method]());
 }
 
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: (_, h) => h.view('index')
-});
-
 const init = async () => {
     try {
         await server.register(require('vision'));
@@ -31,36 +27,9 @@ const init = async () => {
         const ContextFireDB = new ContextStrategy(new FireDB(connection));
 
         server.route([
-            ...mapRoute(new TodoRoute(ContextFireDB), TodoRoute.methods())
+            ...mapRoute(new TodoRoute(ContextFireDB), TodoRoute.methods()),
+            ...mapRoute(new MainRoute(), MainRoute.methods())
         ]);
-
-        server.route({
-            method: 'GET',
-            path: '/js/{file*}',
-            handler: {
-                directory: {
-                    path: 'public/js',
-                    listing: true
-                }
-            }
-        });
-
-        server.route({
-            method: 'GET',
-            path: '/css/{file*}',
-            handler: {
-                directory: {
-                    path: 'public/css',
-                    listing: true
-                }
-            }
-        });
-
-        server.route({
-            method: 'GET',
-            path: '/{path*}',
-            handler: (_, h) => h.view('404')
-        });
 
         server.views({
             engines: {

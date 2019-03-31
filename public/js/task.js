@@ -35,6 +35,8 @@ updateTodo = () => {
     });
     list += '</ol>';
     document.getElementById("todo-list").innerHTML = list;
+
+    apiPOST(tasks);
 }
 
 idGenerator = () => {
@@ -70,4 +72,14 @@ deleteTask = (id) => {
     tasks = tasks.filter((task) => {if (parseInt(task.id) !== id) return task});
 
     updateTodo();
+}
+
+const apiPOST = (data) => {
+    $.ajax({
+        method: 'POST',
+        url: '/todos',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json' 
+    });
 }

@@ -22,14 +22,14 @@ class TodoRoute extends BaseRoute {
             method: 'POST',
             path: '/todos',
             handler: (req, headers) => {
-                return this.db.create("Foo"); //"TODO: CREATE todos";
+                return this.db.create(req.payload); //"TODO: CREATE todos";
             }
         }
     }
 
     delete() {
         return {
-            method: 'delete',
+            method: 'DELETE',
             path: '/todos',
             handler: (req, headers) => {
                 return this.db.delete("ID"); //TODO: DELETE todos";

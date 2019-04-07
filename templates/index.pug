@@ -16,5 +16,7 @@ block content
         div(id='todo-top')
             span(id='today-span') Today
         div(id='todo-list')
+            script.
+                populateTodoList();
         div(id='todo-footer')
             input(id='todo-footer-input' type='text' placeholder="New Todo" onkeydown="pressEnter(event)")

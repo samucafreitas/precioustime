@@ -27,7 +27,7 @@ class FireDB extends ICrud {
     
     read() {
         var todos = this._connection.database()
-                    .ref('todos')
+                    .ref()
                     .once('value')
                     .then((snap) => snap.val());
         return todos;

@@ -12,7 +12,7 @@ class TodoRoute extends BaseRoute {
             method: 'GET',
             path: '/todos',
             handler: (req, headers) => {
-                return this.db.read("QUERY"); //"TODO: LIST todos";
+                return this.db.read(); //"TODO: LIST todos";
             }
         }
     }
@@ -32,7 +32,7 @@ class TodoRoute extends BaseRoute {
             method: 'DELETE',
             path: '/todos',
             handler: (req, headers) => {
-                return this.db.delete("ID"); //TODO: DELETE todos";
+                return this.db.delete(); //TODO: DELETE todos";
             }
         }
     }

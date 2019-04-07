@@ -1,5 +1,14 @@
 var tasks = [];
 
+// To save objects using localStorage
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj));
+}
+
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key));
+}
+
 createTask = () => {
     var taskDescription = document.getElementById("todo-footer-input").value;
 
@@ -12,6 +21,7 @@ createTask = () => {
     };
 
     tasks.push(task);
+    localStorageTask();
     updateTodo();
 }
 
@@ -34,7 +44,8 @@ updateTodo = () => {
         }
     });
     list += '</ol>';
-    document.getElementById("todo-list").innerHTML = list;
+
+    document.getElementById('todo-list').innerHTML = list;
 
     apiPOST(tasks);
 }
@@ -64,15 +75,37 @@ checkedTask = (id) => {
         }
         return task;
     });
-
+    localStorageTask();
     updateTodo();
 }
 
 deleteTask = (id) => {
     tasks = tasks.filter((task) => {if (parseInt(task.id) !== id) return task});
-
+    localStorageTask();
     updateTodo();
 }
+
+const populateTodoList = () => {
+    tasks = localStorage.getObj('tasks') || [];
+    var mainFocus = localStorage.getItem('mainFocus') || '';
+    updateTodo();
+    updateMainFocus(mainFocus);
+}
+
+const localStorageTask = () => {
+    localStorage.setObj('tasks', tasks);
+}
+
+const updateMainFocus = (main) => {
+    document.getElementById('main-subject').value = main;
+}
+
+const createMainFocus = () => {
+    var main = document.getElementById('main-subject').value;
+    localStorage.setItem('mainFocus', main);
+}
+
+$(document).on('input', '#main-subject', () => createMainFocus());
 
 const apiPOST = (data) => {
     $.ajax({

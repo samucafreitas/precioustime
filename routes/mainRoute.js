@@ -1,4 +1,5 @@
 const BaseRoute = require('./base/baseRoute');
+const FireDB = require('../db/strategies/firebase/fireDB');
 
 class MainRoute extends BaseRoute {
     constructor() {
@@ -9,8 +10,27 @@ class MainRoute extends BaseRoute {
         return {
             method: 'GET',
             path: '/',
-            handler: (_, h) => h.view('index')
+            handler: (_, h) => {
+                if (FireDB.getAuth() != null)
+                    if (FireDB.getAuth().auth().currentUser != null)
+                        return h.view('index');
+                return h.view('login');
+            }
         };
+    }
+
+    getLogin() {
+        return {
+            method: 'POST',
+            path: '/login',
+            handler: async (req, h) => {
+                await FireDB.connect(req.payload.email, req.payload.password);
+                if (FireDB.getAuth() != null)
+                    if (FireDB.getAuth().auth().currentUser != null)
+                        return h.view('index');
+                return h.view('login')
+            }
+        }
     }
 
     getPublicJs() { 

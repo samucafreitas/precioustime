@@ -6,12 +6,14 @@ const mapTodos = (items) => {
 }
 
 class FireDB extends ICrud {
-    constructor(connection) {
+    constructor() {
         super();
-        this._connection = connection;
+        this._connection;
+        this._user;// = this._connection.auth().currentUser;
+        this._auth;// = this._connection.auth();
     }
 
-    static connect() {
+    static connect(email, password) {
         const config = {
             apiKey: "AIzaSyBlXpKwtYx6g915UGHZnhcwaw_lmANRaww",
             authDomain: "precioustime.firebaseapp.com",
@@ -20,21 +22,34 @@ class FireDB extends ICrud {
             storageBucket: "precioustime.appspot.com",
             messagingSenderId: "293403936313"
         };
-
         firebase.initializeApp(config);
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(
+            (auth) => {
+                this._user = auth.user;
+                this._auth = auth;
+            }
+        ).catch((err) => console.error(err))
+        
+        this._connection = firebase;
+
         return firebase;
+    }
+
+    static getAuth() {
+        return this._connection;
     }
     
     read() {
         var todos = this._connection.database()
-                    .ref()
+                    .ref(this._connection.auth().currentUser.uid)
                     .once('value')
                     .then((snap) => snap.val());
         return todos;
     }
 
     create(items) {
-        var todosRef = this._connection.database().ref();
+        var todosRef = this._connection.database().ref(this._connection.auth().currentUser.uid);
         var now = new Date();
         var actualDate = ('0' + (now.getDate())).slice(-2) + ('0' + (now.getMonth() + 1)).slice(-2) + now.getFullYear();
 

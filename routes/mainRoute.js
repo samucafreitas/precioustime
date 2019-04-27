@@ -1,9 +1,9 @@
 const BaseRoute = require('./base/baseRoute');
-const FireDB = require('../db/strategies/firebase/fireDB');
 
 class MainRoute extends BaseRoute {
-    constructor() {
+    constructor(db) {
         super()
+        this.db = db;
     }
 
     getIndex() {
@@ -11,9 +11,9 @@ class MainRoute extends BaseRoute {
             method: 'GET',
             path: '/',
             handler: (_, h) => {
-                if (FireDB.getAuth() != null)
-                    if (FireDB.getAuth().auth().currentUser != null)
-                        return h.view('index');
+                var user = this.db.getCurrentUser();
+                if (user !== null)
+                    return h.view('index');
                 return h.view('login');
             }
         };
@@ -24,10 +24,11 @@ class MainRoute extends BaseRoute {
             method: 'POST',
             path: '/login',
             handler: async (req, h) => {
-                await FireDB.connect(req.payload.email, req.payload.password);
-                if (FireDB.getAuth() != null)
-                    if (FireDB.getAuth().auth().currentUser != null)
-                        return h.view('index');
+                var l = await this.db.login(req.payload.email, req.payload.password);
+                console.log(l)
+                var user = this.db.getCurrentUser();
+                if (user !== null)
+                    return h.view('index');
                 return h.view('login')
             }
         }

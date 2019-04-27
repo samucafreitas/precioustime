@@ -23,12 +23,13 @@ const init = async () => {
         await server.register(require('vision'));
         await server.register(require('inert'));
 
-        //const connection = FireDB.connect('','');
-        const ContextFireDB = new ContextStrategy(new FireDB(/*connection*/));
+        const connection = FireDB.connect();
+        const db = new FireDB(connection);
+        const ContextFireDB = new ContextStrategy(db);
 
         server.route([
             ...mapRoute(new TodoRoute(ContextFireDB), TodoRoute.methods()),
-            ...mapRoute(new MainRoute(), MainRoute.methods())
+            ...mapRoute(new MainRoute(db), MainRoute.methods())
         ]);
 
         server.views({

@@ -44,7 +44,7 @@ const init = async () => {
         console.log(`Server running at: ${server.info.uri}`);
         server.start()
     } catch(err) {
-        console.error('[ERROR]', err);
+        console.error('[ERROR] -> ', err);
     }
 }
 

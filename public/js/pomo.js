@@ -1,7 +1,8 @@
 // TODO: state functions
 pomo = () => {
     var tomato = 25 * 60;
-    var formatted_time;
+    var formatted_time = '';
+    const USER = document.getElementById('message').innerHTML;
 
     // That's why js sucks!
     setInterval(() => {
@@ -10,7 +11,7 @@ pomo = () => {
         document.title = '(' + formatted_time + ')' + ' Precious Time';
         tomato--;
     
-        document.getElementById('message').innerHTML = wellcome('Samuel');
+        document.getElementById('message').innerHTML = wellcome(USER);
     }
     , 1000);
 }

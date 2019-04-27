@@ -3,33 +3,46 @@ const BaseRoute = require('./base/baseRoute');
 class MainRoute extends BaseRoute {
     constructor(db) {
         super()
-        this.db = db;
+        this._fire = db;
     }
 
     getIndex() {
         return {
             method: 'GET',
             path: '/',
-            handler: (_, h) => {
-                var user = this.db.getCurrentUser();
+            handler: (_, reply) => {
+                var user = this._fire.getCurrentUser();
                 if (user !== null)
-                    return h.view('index');
-                return h.view('login');
+                    return reply.view('index');
+                return reply.view('login');
             }
         };
     }
 
     getLogin() {
         return {
+            method: 'GET',
+            path: '/login',
+            handler: (_, reply) => {
+                var user = this._fire.getCurrentUser();
+                if (user !== null)
+                    return reply.view('index');
+                return reply.view('login');
+            }
+        }
+    }
+
+    postLogin() {
+        return {
             method: 'POST',
             path: '/login',
-            handler: async (req, h) => {
-                var l = await this.db.login(req.payload.email, req.payload.password);
-                console.log(l)
-                var user = this.db.getCurrentUser();
+            handler: async (req, reply) => {
+                await this._fire.login(req.payload.email, req.payload.password);
+
+                var user = this._fire.getCurrentUser();
                 if (user !== null)
-                    return h.view('index');
-                return h.view('login')
+                    return reply.view('index', {user: user.displayName});
+                return reply.view('login')
             }
         }
     }
@@ -64,7 +77,7 @@ class MainRoute extends BaseRoute {
         return {
             method: 'GET',
             path: '/{path*}',
-            handler: (_, h) => h.view('404')
+            handler: (_, reply) => reply.view('404').code(404)
         };
     }
 }

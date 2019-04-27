@@ -9,8 +9,7 @@ class FireDB extends ICrud {
     constructor(connection) {
         super();
         this._connection = connection;
-        this._user = null;// = this._connection.auth().currentUser;
-        this._auth = null;// = this._connection.auth();
+        this._user = null;
     }
 
     static connect() {
@@ -27,37 +26,27 @@ class FireDB extends ICrud {
         return firebase;
     }
 
-    login(email, password) {
-        this._connection.auth().setPersistence(this._connection.auth.Auth.Persistence.LOCAL)
-        .then(function () {
-            // Existing and future Auth states are now persisted in the current
-            // session only. Closing the window would clear any existing state even
-            // if a user forgets to sign out.
-            // ...
-            // New sign-in will be persisted with session persistence.
-            return this._connection.auth().signInWithEmailAndPassword(email, password);
-        })
-        .catch(function (error) {
-            // Handle Errors here.
+    async login(email, password) {
+        await firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log(errorMessage)
+            console.error(errorCode, errorMessage);
+
+            // TODO: handle erros
         });
 
-        /*this._connection.auth().signInWithEmailAndPassword(email, password)
-        .then(
-            (auth) => {
-                this._user = auth.user;
-                return this._user;
+        this._connection.auth().onAuthStateChanged((user) => {
+            if (user) {
+                console.log('user is logged', user.email);
+                this._user = user;
+            } else {
+                this._user = null;
             }
-        ).catch((err) => console.error('[ERROR] Login -> ', err));*/
-
-        return null;
+        });
     }
-
+   
     getCurrentUser() {
-        console.log(this._connection.auth().currentUser)
-        return this._connection.auth().currentUser;
+        return this._user;
     }
 
     read() {
